@@ -14,7 +14,7 @@
         paramRe.lastIndex = 0;
         var regexp = path + '', match;
         while(match = paramRe.exec(path)){
-            regexp = regexp.replace(match[0], '([^/.\\\\]+)'); 
+            regexp = regexp.replace(match[0], '([^/\\\\]+)'); 
         }
         this.routes.push({
             regexp: new RegExp('^' + regexp + '$'),
