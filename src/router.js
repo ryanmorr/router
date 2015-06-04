@@ -1,13 +1,21 @@
 (function(win){
     'use strict';
 
-    var paramRe = /:([^\/.\\]+)/g;
+    var has = {}.hasOwnProperty,
+    paramRe = /:([^\/.\\]+)/g;
 
-    function Router(){
+    function Router(routes){
         if(!(this instanceof Router)){
-            return new Router();
+            return new Router(routes);
         }
         this.routes = [];
+        if(routes){
+            for(var path in routes){
+                if(has.call(routes, path)){
+                    this.route(path, routes[path]);
+                }
+            }
+        }
     }
 
     Router.prototype.route = function(path, fn){

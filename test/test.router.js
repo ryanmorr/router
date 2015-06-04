@@ -21,9 +21,10 @@ describe('router', function(){
     });
 
     it('should support special characters as defined by RFC 3986', function(){
-        var router = Router();
         var spy = sinon.spy();
-        router.route('/foo/:bar', spy);
+        var router = Router({
+            '/foo/:bar': spy
+        });
         router.dispatch('/foo/-._~:?#[]@!$&\'()*+,;=');
         expect(spy.called).to.equal(true);
         expect(spy.calledWith('-._~:?#[]@!$&\'()*+,;=')).to.equal(true);
