@@ -81,6 +81,15 @@
         return this;
     };
 
-    win.Router = Router;
+    /**
+     * Expose 'Router'
+     */
+    if(typeof module !== 'undefined' && module.exports){
+        module.exports = Router;
+    }else if(typeof define === 'function' && define.amd){
+        define(function(){ return Router; });
+    }else{
+        win['Router'] = Router;
+    }
 
 })(this);
