@@ -5,8 +5,8 @@
     "eqeqeq": true,
     "freeze": true,
     "immed": true,
+    "newcap": false,
     "latedef": true,
-    "newcap": true,
     "noarg": true,
     "quotmark": "single",
 
