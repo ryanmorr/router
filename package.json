@@ -1,6 +1,6 @@
 {
   "name": "router",
-  "description": "Simple router to bind paths and parameters to callbacks",
+  "description": "Simple router to bind URL paths to callback functions",
   "version": "1.0.0",
   "license": "UNLICENSE",
   "homepage": "https://github.com/ryanmorr/router",
