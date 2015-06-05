@@ -32,7 +32,7 @@
      * Add a new route to the router with a path 
      * which may or may not contain embedded 
      * parameters from which to extract from
-     * a matching url and pass to the provided
+     * a matching URL and pass to the provided
      * callback function
      * 
      * Example:
