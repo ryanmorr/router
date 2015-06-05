@@ -37,7 +37,7 @@
      * 
      * Example:
      *
-     * route('/foo/:bar', function(bar){
+     * Router().route('/foo/:bar', function(bar){
      *     
      * });
      *
@@ -64,7 +64,7 @@
      * the callback function of the first matching 
      * pattern, passing all if any parameters
      *
-     * @param {String} path
+     * @param {String} path (optional)
      * @return {Router}
      * @api public
      */
