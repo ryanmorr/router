@@ -1,4 +1,4 @@
-# Router
+# Router [![Build Status](https://travis-ci.org/ryanmorr/router.svg)](https://travis-ci.org/ryanmorr/router)
 
 Simple router implementation to bind a URL path to a callback function.
 
