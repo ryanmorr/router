@@ -60,7 +60,7 @@ router.dispatch();
 
 ## Installation
 
-Typed is [CommonJS](http://www.commonjs.org/) and [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compatible with no dependencies. You can download the [development](http://github.com/ryanmorr/router/raw/master/dist/router.js) or [minified](http://github.com/ryanmorr/router/raw/master/dist/router.min.js) version, or install it in one of the following ways:
+Router is [CommonJS](http://www.commonjs.org/) and [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compatible with no dependencies. You can download the [development](http://github.com/ryanmorr/router/raw/master/dist/router.js) or [minified](http://github.com/ryanmorr/router/raw/master/dist/router.min.js) version, or install it in one of the following ways:
 
 ``` sh
 npm install git+https://git@github.com/ryanmorr/router.git
