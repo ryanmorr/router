@@ -1,7 +1,7 @@
 {
   "name": "router",
   "description": "Simple router to bind URL paths to callback functions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "Unlicense",
   "homepage": "https://github.com/ryanmorr/router",
   "main": "dist/router.js",
