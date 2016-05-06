@@ -1,4 +1,4 @@
-/*! router v1.0.1 | (c) 2016 Ryan Morr | https://github.com/ryanmorr/router */
+/*! router v1.0.2 | (c) 2016 Ryan Morr | https://github.com/ryanmorr/router */
 (function(win) {
     'use strict';
 
