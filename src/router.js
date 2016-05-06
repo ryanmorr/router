@@ -1,4 +1,4 @@
-(function(win){
+(function(win) {
     'use strict';
 
     var has = {}.hasOwnProperty,
@@ -14,14 +14,14 @@
      * @param {Object} routes (optional)
      * @api public
      */
-    function Router(routes){
-        if(!(this instanceof Router)){
+    function Router(routes) {
+        if (!(this instanceof Router)) {
             return new Router(routes);
         }
         this.routes = [];
-        if(routes){
-            for(var path in routes){
-                if(has.call(routes, path)){
+        if (routes) {
+            for (var path in routes) {
+                if (has.call(routes, path)) {
                     this.route(path, routes[path]);
                 }
             }
@@ -33,9 +33,7 @@
      * which may or may not contain embedded 
      * parameters from which to extract from
      * a matching URL and pass to the provided
-     * callback function
-     * 
-     * Example:
+     * callback function:
      *
      * Router().route('/foo/:bar', function(bar){
      *     
@@ -46,10 +44,10 @@
      * @return {Router}
      * @api public
      */
-    Router.prototype.route = function(path, callback){
+    Router.prototype.route = function(path, callback) {
         paramRe.lastIndex = 0;
         var regexp = path + '', match;
-        while(match = paramRe.exec(path)){
+        while (match = paramRe.exec(path)) {
             regexp = regexp.replace(match[0], '([^/\\\\]+)'); 
         }
         this.routes.push({
@@ -68,12 +66,12 @@
      * @return {Router}
      * @api public
      */
-    Router.prototype.dispatch = function(path){
+    Router.prototype.dispatch = function(path) {
         path = path || win.location.pathname;
-        for(var i = 0, len = this.routes.length, route, matches; i < len; i++){
+        for (var i = 0, len = this.routes.length, route, matches; i < len; i++) {
             route = this.routes[i];
             matches = route.regexp.exec(path);
-            if(matches && matches[0]){
+            if (matches && matches[0]) {
                 route.callback.apply(null, matches.slice(1));
                 return this; 
             }
@@ -84,11 +82,11 @@
     /**
      * Expose 'Router'
      */
-    if(typeof module !== 'undefined' && module.exports){
+    if (typeof module !== 'undefined' && module.exports) {
         module.exports = Router;
-    }else if(typeof define === 'function' && define.amd){
+    } else if(typeof define === 'function' && define.amd) {
         define(function(){ return Router; });
-    }else{
+    } else {
         win['Router'] = Router;
     }
 
