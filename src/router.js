@@ -44,7 +44,7 @@
      * @return {Router}
      * @api public
      */
-    Router.prototype.route = function(path, callback) {
+    Router.prototype.route = function route(path, callback) {
         paramRe.lastIndex = 0;
         var regexp = path + '', match;
         while (match = paramRe.exec(path)) {
@@ -66,7 +66,7 @@
      * @return {Router}
      * @api public
      */
-    Router.prototype.dispatch = function(path) {
+    Router.prototype.dispatch = function dispatch(path) {
         path = path || win.location.pathname;
         for (var i = 0, len = this.routes.length, route, matches; i < len; i++) {
             route = this.routes[i];
