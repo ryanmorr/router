@@ -1,28 +1,29 @@
-describe('Router', function(){
-    'use strict';
+/* eslint-disable max-len, no-unused-expressions */
 
-    var expect = chai.expect;
+import { expect } from 'chai';
+import Router from '../src/router';
 
-    it('should invoke callback for matching path', function(){
-        var router = new Router();
-        var spy = sinon.spy();
+describe('Router', () => {
+    it('should invoke callback for matching path', () => {
+        const router = new Router();
+        const spy = sinon.spy();
         router.route('/foo/bar', spy);
         router.dispatch('/foo/bar');
         expect(spy.called).to.equal(true);
     });
 
-    it('should pass parameters to the callback for matching path', function(){
-        var router = Router();
-        var spy = sinon.spy();
+    it('should pass parameters to the callback for matching path', () => {
+        const router = Router();
+        const spy = sinon.spy();
         router.route('/foo/:bar/baz/:qux', spy);
         router.dispatch('/foo/123/baz/abc');
         expect(spy.called).to.equal(true);
         expect(spy.calledWith('123', 'abc')).to.equal(true);
     });
 
-    it('should support special characters as defined by RFC 3986', function(){
-        var spy = sinon.spy();
-        var router = Router({
+    it('should support special characters as defined by RFC 3986', () => {
+        const spy = sinon.spy();
+        const router = Router({
             '/foo/:bar': spy
         });
         router.dispatch('/foo/-._~:?#[]@!$&\'()*+,;=');
@@ -30,10 +31,10 @@ describe('Router', function(){
         expect(spy.calledWith('-._~:?#[]@!$&\'()*+,;=')).to.equal(true);
     });
 
-    it('should stop matching after finding the first successful match', function(){
-        var spy1 = sinon.spy();
-        var spy2 = sinon.spy();
-        var spy3 = sinon.spy();
+    it('should stop matching after finding the first successful match', () => {
+        const spy1 = sinon.spy();
+        const spy2 = sinon.spy();
+        const spy3 = sinon.spy();
         Router()
             .route('/foo', spy1)
             .route('/bar', spy2)
