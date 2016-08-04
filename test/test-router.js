@@ -1,6 +1,7 @@
 /* eslint-disable max-len, no-unused-expressions */
 
 import { expect } from 'chai';
+import sinon from 'sinon';
 import Router from '../src/router';
 
 describe('Router', () => {
@@ -44,5 +45,4 @@ describe('Router', () => {
         expect(spy2.called).to.equal(false);
         expect(spy3.called).to.equal(false);
     });
-
 });
