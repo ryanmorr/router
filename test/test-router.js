@@ -5,8 +5,13 @@ import sinon from 'sinon';
 import Router from '../src/router';
 
 describe('Router', () => {
+    it('should support invocation with and without the new operator', () => {
+        expect(Router()).to.be.instanceof(Router);
+        expect(new Router()).to.be.instanceof(Router);
+    });
+
     it('should invoke callback for matching path', () => {
-        const router = new Router();
+        const router = Router();
         const spy = sinon.spy();
         router.route('/foo/bar', spy);
         router.dispatch('/foo/bar');
