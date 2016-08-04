@@ -57,6 +57,7 @@ gulp.task('test', () => {
             compilers: [
                 'babel-core/register'
             ]
+        }));
 });
 
 gulp.task('default', [
