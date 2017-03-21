@@ -6,14 +6,14 @@
 ## Usage
 
 ```javascript
-var router = Router()
-    .route('/', function(){
+const router = Router()
+    .route('/', () => {
         // Handle home page 
     })
-    .route('/posts', function(){
+    .route('/posts', () => {
         // Handle posts
     })
-    .route('/post/:id', function(id){
+    .route('/post/:id', () => {
         // Handle single post with `id` provided as a parameter
     });
 
@@ -29,11 +29,11 @@ Create a new 'Router' instance with or without the new operator. Optionally pass
 
 ```javascript
 // Create a `Router` instance with routes
-var router = Router({
-    '/foo': function(){
+const router = Router({
+    '/foo': () => {
         // Do something 
     },
-    '/bar/:id': function(id){
+    '/bar/:id': () => {
         // Do something 
     }
 });
@@ -44,7 +44,7 @@ var router = Router({
 Add a new route to the router with a path which may or may not contain embedded parameters from which to extract from a matching URL and pass to the provided callback function. Returns the router instance for method chaining.
 
 ```javascript
-router.route('/foo/:bar/:baz', function(bar, baz){
+router.route('/foo/:bar/:baz', (bar, baz) => {
     // Do something 
 });
 ```
