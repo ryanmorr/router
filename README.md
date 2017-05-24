@@ -1,5 +1,10 @@
 # Router
-[![GitHub version](https://badge.fury.io/gh/ryanmorr%2Frouter.svg)](https://badge.fury.io/gh/ryanmorr%2Frouter) [![Build Status](https://travis-ci.org/ryanmorr/router.svg)](https://travis-ci.org/ryanmorr/router) ![Size](https://badge-size.herokuapp.com/ryanmorr/router/master/dist/router.min.js.svg?color=blue&label=file%20size)
+
+[![Version Badge][version-image]][project-url]
+[![Build Status][build-image]][build-url]
+[![Dependencies][dependencies-image]][project-url]
+[![License][license-image]][license-url]
+[![File Size][file-size-image]][project-url]
 
 > Simple router to bind URL paths to callback functions
 
@@ -84,3 +89,12 @@ gulp test
 ## License
 
 This project is dedicated to the public domain as described by the [Unlicense](http://unlicense.org/).
+
+[project-url]: https://github.com/ryanmorr/router
+[version-image]: https://badge.fury.io/gh/ryanmorr%2Frouter.svg
+[build-url]: https://travis-ci.org/ryanmorr/router
+[build-image]: https://travis-ci.org/ryanmorr/router.svg
+[dependencies-image]: https://david-dm.org/ryanmorr/router.svg
+[license-image]: https://img.shields.io/badge/license-Unlicense-blue.svg
+[license-url]: UNLICENSE
+[file-size-image]: https://badge-size.herokuapp.com/ryanmorr/router/master/dist/router.min.js.svg?color=blue&label=file%20size
