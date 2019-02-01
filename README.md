@@ -53,7 +53,7 @@ window.addEventListener('popstate', () => {
 Use in Node.js:
 
 ```javascript
-const http = require('http'),
+const http = require('http');
 const url = require('url');
  
 const server = http.createServer((req, res) => {
