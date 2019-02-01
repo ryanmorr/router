@@ -2,88 +2,66 @@
 
 [![Version Badge][version-image]][project-url]
 [![Build Status][build-image]][build-url]
-[![Dependencies][dependencies-image]][project-url]
 [![License][license-image]][license-url]
-[![File Size][file-size-image]][project-url]
 
-> Simple router to bind URL paths to callback functions
+> A minimalist universal router for web applications
+
+## Install
+
+Download the [development](http://github.com/ryanmorr/router/raw/master/dist/router.js) or [minified](http://github.com/ryanmorr/router/raw/master/dist/router.min.js) version, or install via NPM:
+
+``` sh
+npm install @ryanmorr/router
+```
 
 ## Usage
 
+Create a router that matches different routes and extracts the parameters to pass to the callback functions:
+
 ```javascript
+import Router from '@ryanmorr/router';
+
 const router = Router()
     .route('/', () => {
         // Handle home page 
     })
-    .route('/posts', () => {
-        // Handle posts
+    .route('/foo', () => {
+        // Handle "/foo"
     })
-    .route('/post/:id', () => {
-        // Handle single post with `id` provided as a parameter
+    .route('/foo/:bar', ({bar}) => {
+        // Parameters are indicated by a prefixed colon
+    })
+    .route('/foo/:bar/:baz?', ({bar, baz}) => {
+        // Optional parameters are indicated by a suffixed question mark
+    })
+    .route('/foo/qux/*', ({wildcard}) => {
+        // An asterisk indicates a wildcard that will match anything
     });
 
-// Dispatch the router when the history is changed
-window.addEventListener('popstate', router.dispatch.bind(router), false);
-```
-
-## API
-
-### Router([routes])
-
-Create a new 'Router' instance with or without the new operator. Optionally pass an object of routes that map the path to the callback function.
-
-```javascript
-// Create a `Router` instance with routes
-const router = Router({
-    '/foo': () => {
-        // Do something 
-    },
-    '/bar/:id': () => {
-        // Do something 
-    }
-});
-```
-
-### Router#route(path, fn)
-
-Add a new route to the router with a path which may or may not contain embedded parameters from which to extract from a matching URL and pass to the provided callback function. Returns the router instance for method chaining.
-
-```javascript
-router.route('/foo/:bar/:baz', (bar, baz) => {
-    // Do something 
-});
-```
-
-### Router#dispatch([path])
-
-Test a URL against all the routes and invoke the callback function of the first matching pattern, passing all if any parameters. If no path is given, the current window's URL path (`location.pathname`) is used. Returns the router instance for method chaining.
-
-```javascript
-// Dispatch a path
+// Find the route matching "/foo" and invoke the callback function
 router.dispatch('/foo');
-
-// Dispatch using the window's current URL path
-router.dispatch();
 ```
 
-## Installation
+Use in a browser:
 
-Router is [CommonJS](http://www.commonjs.org/) and [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compatible with no dependencies. You can download the [development](http://github.com/ryanmorr/router/raw/master/dist/router.js) or [minified](http://github.com/ryanmorr/router/raw/master/dist/router.min.js) version, or install it in one of the following ways:
-
-``` sh
-npm install ryanmorr/router
-
-bower install ryanmorr/router
+```javascript
+window.addEventListener('popstate', () => {
+    router.dispatch(window.location.pathname);
+});
 ```
 
-## Tests
+Use in Node.js:
 
-Run unit tests by issuing the following commands:
+```javascript
+const http = require('http'),
+const url = require('url');
+ 
+const server = http.createServer((req, res) => {
+    const path = url.parse(req.url).pathname;
+    router.dispatch(path);
+});
 
-``` sh
-npm install
-npm install -g gulp
-gulp test
+server.listen(8888);
 ```
 
 ## License
@@ -94,7 +72,5 @@ This project is dedicated to the public domain as described by the [Unlicense](h
 [version-image]: https://badge.fury.io/gh/ryanmorr%2Frouter.svg
 [build-url]: https://travis-ci.org/ryanmorr/router
 [build-image]: https://travis-ci.org/ryanmorr/router.svg
-[dependencies-image]: https://david-dm.org/ryanmorr/router.svg
 [license-image]: https://img.shields.io/badge/license-Unlicense-blue.svg
 [license-url]: UNLICENSE
-[file-size-image]: https://badge-size.herokuapp.com/ryanmorr/router/master/dist/router.min.js.svg?color=blue&label=file%20size
