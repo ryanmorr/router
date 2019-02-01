@@ -1,95 +1,289 @@
-/*! Router v2.0.0 | https://github.com/ryanmorr/router */
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Router = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
+/*! @ryanmorr/router v3.0.0 | https://github.com/ryanmorr/router */
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.router = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
+exports.default = Router;
+
+var _util = require("./util");
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * Router for dispatching callbacks
+ * based on a URI
+ *
+ * @class PathRouter
+ * @api private
+ */
+var PathRouter =
+/*#__PURE__*/
+function () {
+  /**
+   * Create a new 'Router' and optionally
+   * provide an object of routes that map
+   * the path to the callback function
+   *
+   * @constructor
+   * @param {Object} routes (optional)
+   * @api public
+   */
+  function PathRouter() {
+    var routes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+    _classCallCheck(this, PathRouter);
+
+    this.routes = new Map();
+
+    if (routes) {
+      for (var path in routes) {
+        if ((0, _util.hasOwnProperty)(routes, path)) {
+          this.route(path, routes[path]);
+        }
+      }
+    }
+  }
+  /**
+   * Add a new route to the router with a path
+   * which may or may not contain embedded
+   * parameters from which to extract from
+   * a matching URL and pass to the provided
+   * callback function
+   *
+   * @param {String} path
+   * @param {Function} callback
+   * @return {PathRouter}
+   * @api public
+   */
+
+
+  _createClass(PathRouter, [{
+    key: "route",
+    value: function route(path, callback) {
+      path = (0, _util.normalizeURLPath)(path);
+      this.routes.set((0, _util.getRouteMatcher)(path), callback);
+      return this;
+    }
+    /**
+     * Test a URL against all the routes and invoke
+     * the callback function of the first matching
+     * route
+     *
+     * @param {String} path
+     * @return {PathRouter}
+     * @api public
+     */
+
+  }, {
+    key: "dispatch",
+    value: function dispatch(path) {
+      path = (0, _util.normalizeURLPath)(path);
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.routes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var _step$value = _slicedToArray(_step.value, 2),
+              matcher = _step$value[0],
+              callback = _step$value[1];
+
+          var params = matcher(path);
+
+          if (params) {
+            callback.call(null, params);
+            return this;
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return this;
+    }
+  }]);
+
+  return PathRouter;
+}();
+/**
+ * Factory function for creating
+ * a `PathRouter` instance
+ *
+ * @param {Object} routes (optional)
+ * @return {PathRouter}
+ * @api public
+ */
+
+
+function Router(routes) {
+  return new PathRouter(routes);
+}
+
+module.exports = exports.default;
+
+},{"./util":2}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.hasOwnProperty = hasOwnProperty;
+exports.normalizeURLPath = normalizeURLPath;
+exports.getRouteMatcher = getRouteMatcher;
+
 /**
  * Common variables
  */
 var has = {}.hasOwnProperty;
-var paramRe = /:([^\/.\\]+)/g;
-
+var removeTrailingSlashRe = /\/$/;
 /**
- * Create a new 'Router' instance with or
- * without the new operator. Optionally pass
- * an object of routes that map the path to
- * the callback function
+ * Check if a string value is numeric
  *
- * @constructor
- * @param {Object} routes (optional)
- * @api public
+ * @param {String} value
+ * @return {Boolean}
+ * @api private
  */
-function Router(routes) {
-    if (!(this instanceof Router)) {
-        return new Router(routes);
-    }
-    this.routes = [];
-    if (routes) {
-        for (var path in routes) {
-            if (has.call(routes, path)) {
-                this.route(path, routes[path]);
-            }
-        }
-    }
-}
 
+function isNumeric(value) {
+  return !Number.isNaN(parseFloat(value)) && isFinite(value);
+}
 /**
- * Add a new route to the router with a path
- * which may or may not contain embedded
- * parameters from which to extract from
- * a matching URL and pass to the provided
- * callback function:
+ * Convert strings of primitives
+ * into their natural type
  *
- * Router().route('/foo/:bar', function(bar){
+ * @param {String} value
+ * @return {String|Number|Boolean|Null|Undefined}
+ * @api private
+ */
+
+
+function coerce(value) {
+  if (value === 'true') {
+    return true;
+  }
+
+  if (value === 'false') {
+    return false;
+  }
+
+  if (value === 'undefined') {
+    return null;
+  }
+
+  if (isNumeric(value)) {
+    return Number(value);
+  }
+
+  return value;
+}
+/**
+ * Determine whether an object has the specified
+ * property as a direct property of that object
  *
- * });
+ * @param {Object} obj
+ * @param {String} name
+ * @return {Boolean}
+ * @api private
+ */
+
+
+function hasOwnProperty(obj, name) {
+  return has.call(obj, name);
+}
+/**
+ * Normalize a URL path for consistency
  *
  * @param {String} path
- * @param {Function} callback
- * @return {Router}
- * @api public
+ * @return {RegExp}
+ * @api private
  */
-Router.prototype.route = function route(path, callback) {
-    paramRe.lastIndex = 0;
-    var regexp = path + '',
-        match = void 0;
-    while (match = paramRe.exec(path)) {
-        regexp = regexp.replace(match[0], '([^/\\\\]+)');
-    }
-    this.routes.push({ regexp: new RegExp('^' + regexp + '$'), callback: callback });
-    return this;
-};
 
+
+function normalizeURLPath(path) {
+  path = path.trim();
+  return path === '/' ? path : path.replace(removeTrailingSlashRe, '');
+}
 /**
- * Test a URL against all the routes and invoke
- * the callback function of the first matching
- * pattern, passing all if any parameters
+ * Parse a URL route and return a function that
+ * can match the URL and extract the parameters
  *
- * @param {String} path (optional)
- * @return {Router}
- * @api public
+ * @param {String} path
+ * @return {Function}
+ * @api private
  */
-Router.prototype.dispatch = function dispatch() {
-    var path = arguments.length <= 0 || arguments[0] === undefined ? window.location.pathname : arguments[0];
 
-    for (var i = 0, len = this.routes.length, route, matches; i < len; i++) {
-        route = this.routes[i];
-        matches = route.regexp.exec(path);
-        if (matches && matches[0]) {
-            route.callback.apply(null, matches.slice(1));
-            return this;
-        }
+
+function getRouteMatcher(path) {
+  if (path === '/') {
+    return function (p) {
+      return p === '/' ? {} : null;
+    };
+  }
+
+  var keys = [];
+  var pattern = path.split('/').map(function (part) {
+    if (!part) {
+      return part;
     }
-    return this;
-};
 
-/**
- * Export `Router` class
- */
-exports.default = Router;
-module.exports = exports['default'];
+    var length = part.length;
+    var code = part.charCodeAt(0);
+
+    if (code === 42) {
+      keys.push('wildcard');
+      return '/(.*)';
+    } else if (code === 58) {
+      var optional = part.charCodeAt(length - 1) === 63;
+      keys.push(part.substring(1, optional ? length - 1 : length));
+
+      if (optional) {
+        return '(?:/([^/]+?))?';
+      }
+
+      return '/([^/]+?)';
+    }
+
+    return '/' + part;
+  });
+  var regex = new RegExp('^' + pattern.join('') + '\/?$', 'i');
+  return function (path) {
+    var matches = regex.exec(path);
+
+    if (matches && matches[0]) {
+      return matches.slice(1).map(decodeURI).map(coerce).reduce(function (map, value, i) {
+        map[keys[i]] = value;
+        return map;
+      }, {});
+    }
+
+    return null;
+  };
+}
 
 },{}]},{},[1])(1)
 });
