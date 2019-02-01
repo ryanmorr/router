@@ -15,7 +15,7 @@ import buffer from 'vinyl-buffer';
 const banner = `/*! ${pkg.name} v${pkg.version} | ${pkg.homepage} */\n`;
 
 const config = {
-    name: 'router',
+    name: 'Router',
     files: './src/**/*.js',
     entryFile: './src/router.js',
     outputFile: 'router.js',
