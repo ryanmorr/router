@@ -12,9 +12,10 @@ import del from 'del';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 
-const banner = '/*! ${pkg.name} v${pkg.version} | ${pkg.homepage} */\n';
+const banner = `/*! ${pkg.name} v${pkg.version} | ${pkg.homepage} */\n`;
 
 const config = {
+    name: 'router',
     files: './src/**/*.js',
     entryFile: './src/router.js',
     outputFile: 'router.js',
@@ -27,7 +28,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task('build', ['clean'], () => {
-    return browserify(config.entryFile, {debug: true, standalone: pkg.name})
+    return browserify(config.entryFile, {debug: true, standalone: config.name})
         .transform(babelify)
         .bundle()
         .pipe(source(config.outputFile))
@@ -54,14 +55,19 @@ gulp.task('test', () => {
         .pipe(mocha({
             ui: 'bdd',
             reporter: 'spec',
-            compilers: [
-                'babel-core/register'
+            require: [
+                '@babel/register'
             ]
         }));
 });
 
+gulp.task('watch', () => {
+    gulp.watch(['./gulpfile.babel.js', config.files, config.specs], ['lint', 'test']);
+});
+
 gulp.task('default', [
     'lint',
-    'test',
-    'build'
+    'coverage',
+    'build',
+    'watch'
 ]);
