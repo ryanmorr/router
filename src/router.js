@@ -1,7 +1,7 @@
 /**
  * Import utils
  */
-import { hasOwnProperty, getRouteMatcher, normalizeURLPath } from './util';
+import { hasOwnProperty, getRouteMatcher, normalizeURLPath } from './util.js';
 
 /**
  * Router for dispatching callbacks

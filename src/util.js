@@ -96,7 +96,7 @@ export function getRouteMatcher(path) {
         }
         return '/' + part;
     });
-    const regex = new RegExp('^' + pattern.join('') + '\/?$', 'i');
+    const regex = new RegExp('^' + pattern.join('') + '/?$', 'i');
     return (path) => {
         const matches = regex.exec(path);
         if (matches && matches[0]) {

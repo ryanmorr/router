@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import Router from '../src/router';
+import Router from '../../src/router.js';
 
 describe('router', () => {
     it('should route root paths', () => {
