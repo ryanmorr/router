@@ -83,6 +83,7 @@ describe('router', () => {
         expect(callback.args[1][0]).to.deep.equal({foo: 'bbb'});
 
         router.dispatch('');
+        router.dispatch('/');
         router.dispatch('root');
         router.dispatch('root/');
         expect(callback.callCount).to.equal(2);
@@ -120,6 +121,8 @@ describe('router', () => {
         router.dispatch('root/foo/bar');
         router.dispatch('root/foo');
         router.dispatch('root/foo/');
+        router.dispatch('/root/foo');
+        router.dispatch('/root/foo/');
         expect(callback.callCount).to.equal(2);
 
         router.route('/root/:foo/static/:bar', callback);
@@ -317,6 +320,26 @@ describe('router', () => {
         router.dispatch('/root/');
         router.dispatch('root/foo');
         expect(callback.callCount).to.equal(6);
+    });
+
+    it('should not call a static route over an optional route', () => {
+        const callback1 = sinon.spy();
+        const callback2 = sinon.spy();
+
+        const router = Router({
+            '/foo/:bar': callback1,
+            '/foo/:bar/:baz?': callback2
+        });
+
+        router.dispatch('/foo/aaa');
+        expect(callback1.callCount).to.equal(1);
+        expect(callback1.args[0][0]).to.deep.equal({bar: 'aaa'});
+        expect(callback2.callCount).to.equal(0);
+
+        router.dispatch('/foo/aaa/bbb');
+        expect(callback2.callCount).to.equal(1);
+        expect(callback2.args[0][0]).to.deep.equal({bar: 'aaa', baz: 'bbb'});
+        expect(callback1.callCount).to.equal(1);
     });
 
     it('should route special characters as defined by RFC 3986', () => {
