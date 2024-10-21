@@ -5,8 +5,11 @@
   "license": "Unlicense",
   "author": "Ryan Morr",
   "homepage": "https://github.com/ryanmorr/router",
-  "repository": "github:ryanmorr/router",
   "bugs": "https://github.com/ryanmorr/router/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanmorr/router.git"
+  },
   "keywords": [
     "javascript",
     "router",
